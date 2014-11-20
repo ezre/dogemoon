@@ -8,7 +8,7 @@ jade    = require 'gulp-jade'
 gulp.task 'coffee', ->
   gulp.src './src/js/*.coffee'
     .pipe coffee(bare: true).on 'error', gutil.log
-    .pipe gulp.dest '.public/js/'
+    .pipe gulp.dest './public/js/'
 
 gulp.task 'one', ->
   gulp.src './src/css/main.styl'
