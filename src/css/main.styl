@@ -1,6 +1,23 @@
+gradient-color-outer = #050022
+gradient-color-inner = #080035
+
 html, body
   margin: 0
   padding: 0
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0, gradient-color-outer),
+    color-stop(0.5, gradient-color-inner),
+    color-stop(1, gradient-color-outer)
+  );
+  background-image: -o-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+  background-image: -moz-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+  background-image: -webkit-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+  background-image: -ms-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+  background-image: linear-gradient(to right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+
 canvas
   width: 100%
   height: 100%
