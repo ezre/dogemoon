@@ -44,6 +44,7 @@ class Shape
     @_angle = angle * (Math.PI / 180)
   getMotion: -> {angle: @_angle, speed: @_speed}
   update: ->
+    @_clear()
     @_move() if @_speed? and @_angle?
     @_draw()
   _move: ->
@@ -54,6 +55,7 @@ class Shape
   _checkIfOnCanvas: =>
     Boolean @_posX + @_width < Document.getVisibleWidth() and @_posX > 0 and @_posY + @_height < Document.getVisibleHeight() and @_posY > 0
   _draw: ->
+  _clear: ->
   _getContext: ->
     CanvasHolder.get().getContext()
 
@@ -65,6 +67,7 @@ class Rectangle extends Shape
     ctx.fillStyle = @_color
     ctx.fillRect @_posX, @_posY, @_width, @_height
     ctx
+  _clear: -> @_getContext().clearRect @_posX, @_posY, @_width, @_height
 
 class Image extends Shape
   constructor: (@_posX, @_posY, @_width, @_height, @_image, destroy) ->
@@ -128,7 +131,6 @@ class CanvasHolder
         galaxy: new Galaxy
     getContext: -> @_ctx
     update: ->
-      # @clear()
       element.update() for name, element of @_elements
     _setFullscreen: ->
       console.log "Setting fullscreen", Document.getVisibleWidth(), Document.getVisibleHeight()
