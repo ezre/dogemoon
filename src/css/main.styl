@@ -17,7 +17,53 @@ html, body
   background-image: -webkit-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
   background-image: -ms-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
   background-image: linear-gradient(to right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px
+  color: #2c2c2c
+
+h1, h2
+  margin: 0
+
+h2
+  margin: 10px 0
+  font-size: 18px
+  font-weight: 300
+  color: #000
 
 canvas
   width: 100%
   height: 100%
+
+.ui.sidebar
+  width: 250px
+  position: fixed
+  top: 48px
+  left: 0
+  nav
+    width: 100%
+    ul
+      padding-left: 0
+      margin: 0
+      li
+        width: 48px
+        height: 48px
+        color: #fff
+        text-align: center
+        line-height: 48px
+        list-style: none
+        cursor: pointer
+        display: inline-block
+        &.active
+          color: #000
+          background: #fff
+          cursor: default
+  .content
+    width: 100%
+    height: 567px
+    background: #fff
+    .padded-content
+      padding: 27px 27px
+
+label
+  font-size: 12px
+  font-weight: 600

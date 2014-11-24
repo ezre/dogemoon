@@ -2,6 +2,28 @@ doctype html
 html(lang="en")
   head
     title='Doge to the MOOOOOOON!'
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,600,400', rel='stylesheet', type='text/css')
     link(rel='stylesheet', type='text/css', href='./css/main.css')
   body
+    div.ui.sidebar
+      nav
+        ul
+          li.active
+            span.glyphicons.glyphicons-bitcoin='&#xe548;'
+          li
+            span.glyphicons.glyphicons-clock='&#xe055;'
+      .content
+        .padded-content
+          h2='How to play?'
+          p='Send bits to boost Doge flight speed and sent him TO THE MOOOON!'
+          hr
+          label='Calculate'
+          input#calc(type='text')
+          p
+            span#meters='200 000'
+            span=' meters up'
+          #qrcode
+
+  script(type='text/javascript', src='./js/qrcode.js')
+  script(type='text/javascript', src='./js/ui.js')
   script(type='text/javascript', src='./js/main.js')

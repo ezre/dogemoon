@@ -176,6 +176,7 @@ class Main
     console.log "Initialized"
     @canvas = CanvasHolder.get()
     setInterval @mainLoop, 1000 / @FPS
+    ui = new UI
   @mainLoop: ->
     Main.update()
 
