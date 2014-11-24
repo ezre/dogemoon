@@ -40,7 +40,7 @@ class Shape
   constructor: (@_posX, @_posY, @_color = 'transparent', @_destroy) ->
     @_posX ?= Math.random() * Document.getVisibleWidth()
     @_posY ?= Math.random() * Document.getVisibleHeight()
-  setMotion: (angle = 90, @_speed = 15) ->
+  setMotion: (angle = 90, @_speed = 1) ->
     @_angle = angle * (Math.PI / 180)
   getMotion: -> {angle: @_angle, speed: @_speed}
   update: ->
@@ -67,7 +67,16 @@ class Rectangle extends Shape
     ctx.fillStyle = @_color
     ctx.fillRect @_posX, @_posY, @_width, @_height
     ctx
-  _clear: -> @_getContext().clearRect @_posX, @_posY, @_width, @_height
+  _move: ->
+    # console.log "Width", @_width
+    @_posX += @_speed * Math.cos @_angle
+    @_posY += Math.pow(@_width, 2) + @_speed * Math.sin @_angle
+    console.log "Is on canvas?", @_checkIfOnCanvas()
+    @_reset() unless @_checkIfOnCanvas()
+  # _clear: -> @_getContext().clearRect @_posX, @_posY, @_width, @_height
+  _reset: ->
+    @_posY = 0
+    @_posX = Math.random() * (Document.getVisibleWidth() - @_width)
 
 class Image extends Shape
   constructor: (@_posX, @_posY, @_width, @_height, @_image, destroy) ->
