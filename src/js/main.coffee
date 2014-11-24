@@ -101,7 +101,7 @@ class Galaxy
         @_visibleStarsAmount++
     @_stars
   _createStar: (star_id) ->
-    width = Math.round (Math.random() * 5) + 1
+    width = Math.round (Math.random() * 3) + 1
     height = width
     posX = Math.round Math.random() * (Document.getVisibleWidth() - width)
     posY = 0
