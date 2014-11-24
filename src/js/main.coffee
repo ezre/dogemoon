@@ -40,7 +40,7 @@ class Shape
   constructor: (@_posX, @_posY, @_color = 'transparent', @_destroy) ->
     @_posX ?= Math.random() * Document.getVisibleWidth()
     @_posY ?= Math.random() * Document.getVisibleHeight()
-  setMotion: (angle = 90, @_speed = 5) ->
+  setMotion: (angle = 90, @_speed = 15) ->
     @_angle = angle * (Math.PI / 180)
   getMotion: -> {angle: @_angle, speed: @_speed}
   update: ->
@@ -53,14 +53,14 @@ class Shape
     console.log "Is on canvas?", @_checkIfOnCanvas()
     @_destroy() unless @_checkIfOnCanvas()
   _checkIfOnCanvas: =>
-    Boolean @_posX + @_width < Document.getVisibleWidth() and @_posX > 0 and @_posY + @_height < Document.getVisibleHeight() and @_posY > 0
+    Boolean @_posX < Document.getVisibleWidth() + @_width and @_posX > 0 - @_width and @_posY < Document.getVisibleHeight() + @_height and @_posY > 0 - @_height
   _draw: ->
   _clear: ->
   _getContext: ->
     CanvasHolder.get().getContext()
 
 class Rectangle extends Shape
-  constructor: (@_posX, @_posY, @_width, @_height, @color = 'transparent', @_destroy) ->
+  constructor: (@id, @_posX, @_posY, @_width, @_height, @color = 'transparent', @_destroy) ->
     super @_posX, @_posY, @color, @_destroy
   _draw: ->
     ctx = @_getContext()
@@ -78,7 +78,7 @@ class Rocket extends Image
 class Galaxy
   constructor: ->
     # console.log "Galaxy constructor fired!"
-    @_starsAmount = 400
+    @_starsAmount = 50
     @_visibleStarsAmount = 0
     @_starIndex = 0
     @_stars = []
@@ -91,30 +91,33 @@ class Galaxy
     @_addNewStars()
     @_updateStars()
     @_boostController.timeTick()
-  _addNewStars: =>
+  _addNewStars: (newStars = 1) =>
     console.log @_visibleStarsAmount
-    for i in [@_visibleStarsAmount...@_starsAmount]
-      @_stars[@_starIndex] = @_createStar @_starIndex
-      console.log "Star added on index", @_starIndex
-      @_starIndex++
-      @_visibleStarsAmount++
+    if @_visibleStarsAmount < @_starsAmount
+      for i in [0...newStars]
+        @_stars[@_starIndex] = @_createStar @_starIndex
+        console.log "Star added on index", @_starIndex
+        @_starIndex++
+        @_visibleStarsAmount++
     @_stars
-  _createStar: (starIndex) ->
+  _createStar: (star_id) ->
     width = Math.round (Math.random() * 5) + 1
     height = width
     posX = Math.round Math.random() * (Document.getVisibleWidth() - width)
-    posY = Math.round Math.random() * (Document.getVisibleHeight() - height)
-    star = new Rectangle posX, posY, width, height, '#ffffff', ->
-      console.log "Star destroy event fired!", starIndex
-      @_removeStar starIndex
+    posY = 0
+    star = new Rectangle star_id, posX, posY, width, height, '#ffffff', =>
+      console.log "Star destroy event fired!", star_id
+      @_removeStar star_id
       @_visibleStarsAmount--
     star.setMotion()
     star
-  _removeStar: (starIndex) -> delete @_stars[starIndex]
+  _removeStar: (starIndex) ->
+    console.log "removing", @_stars[starIndex]
+    delete @_stars[starIndex]
   _updateStars: ->
     for star in @_stars
       do (star) ->
-        star.update()
+        star.update() if typeof star != 'undefined'
 
 class CanvasHolder
   instance = null
@@ -170,7 +173,7 @@ class CanvasHolder
 #     # TODO: reconnect
 
 class Main
-  @FPS = 60
+  @FPS = 25
   @canvas = null
   @initialize: ->
     console.log "Initialized"
