@@ -58,7 +58,7 @@ class Shape
     CanvasHolder.get().getContext()
 
 class Rectangle extends Shape
-  constructor: (@id, @_posX, @_posY, @_width, @_height, @color = 'transparent', @_destroy) ->
+  constructor: (@_posX, @_posY, @_width, @_height, @color = 'transparent', @_destroy) ->
     super @_posX, @_posY, @color, @_destroy
   _draw: ->
     ctx = @_getContext()
@@ -105,7 +105,7 @@ class Galaxy
     height = width
     posX = Math.round Math.random() * (Document.getVisibleWidth() - width)
     posY = 0
-    star = new Rectangle star_id, posX, posY, width, height, '#ffffff', =>
+    star = new Rectangle posX, posY, width, height, '#ffffff', =>
       @_removeStar star_id
       @_visibleStarsAmount--
     star.setMotion()
