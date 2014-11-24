@@ -17,9 +17,11 @@ html, body
   background-image: -webkit-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
   background-image: -ms-linear-gradient(right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
   background-image: linear-gradient(to right, gradient-color-outer 0%, gradient-color-inner 50%, gradient-color-outer 100%);
-  font-family: 'Open Sans', sans-serif;
   font-size: 14px
   color: #2c2c2c
+
+html, body, input
+  font-family: 'Open Sans', sans-serif;
 
 h1, h2
   margin: 0
@@ -62,8 +64,23 @@ canvas
     height: 567px
     background: #fff
     .padded-content
-      padding: 27px 27px
+      padding: 20px 27px
+      word-break: break-all
+      #calc
+        width: 100%
+        font-size: 18px
+        font-weight: 300
+        color: #2c2c2c
+        position: relative
+        &:after
+          content: 'BTC'
 
 label
   font-size: 12px
   font-weight: 600
+  line-height: 2em
+
+hr
+  border: 1px solid #d7d7d7
+  border-width: 0 0 1px 0
+  margin: 0.9em 0
