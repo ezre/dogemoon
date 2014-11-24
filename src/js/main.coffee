@@ -44,18 +44,16 @@ class Shape
     @_angle = angle * (Math.PI / 180)
   getMotion: -> {angle: @_angle, speed: @_speed}
   update: ->
-    @_clear()
     @_move() if @_speed? and @_angle?
     @_draw()
   _move: ->
     @_posX += @_speed * Math.cos @_angle
     @_posY += @_speed * Math.sin @_angle
-    console.log "Is on canvas?", @_checkIfOnCanvas()
-    @_destroy() unless @_checkIfOnCanvas()
+    @_reset() unless @_checkIfOnCanvas()
+  _reset: ->
   _checkIfOnCanvas: =>
     Boolean @_posX < Document.getVisibleWidth() + @_width and @_posX > 0 - @_width and @_posY < Document.getVisibleHeight() + @_height and @_posY > 0 - @_height
   _draw: ->
-  _clear: ->
   _getContext: ->
     CanvasHolder.get().getContext()
 
@@ -68,12 +66,9 @@ class Rectangle extends Shape
     ctx.fillRect @_posX, @_posY, @_width, @_height
     ctx
   _move: ->
-    # console.log "Width", @_width
     @_posX += @_speed * Math.cos @_angle
     @_posY += Math.pow(@_width, 2) + @_speed * Math.sin @_angle
-    console.log "Is on canvas?", @_checkIfOnCanvas()
     @_reset() unless @_checkIfOnCanvas()
-  # _clear: -> @_getContext().clearRect @_posX, @_posY, @_width, @_height
   _reset: ->
     @_posY = 0
     @_posX = Math.random() * (Document.getVisibleWidth() - @_width)
@@ -86,7 +81,6 @@ class Rocket extends Image
 
 class Galaxy
   constructor: ->
-    # console.log "Galaxy constructor fired!"
     @_starsAmount = 50
     @_visibleStarsAmount = 0
     @_starIndex = 0
@@ -96,16 +90,13 @@ class Galaxy
   setStars: (@_starsAmount) ->
   getStars: -> @_starsAmount
   update: ->
-    # console.log "Updating"
     @_addNewStars()
     @_updateStars()
     @_boostController.timeTick()
   _addNewStars: (newStars = 1) =>
-    console.log @_visibleStarsAmount
     if @_visibleStarsAmount < @_starsAmount
       for i in [0...newStars]
         @_stars[@_starIndex] = @_createStar @_starIndex
-        console.log "Star added on index", @_starIndex
         @_starIndex++
         @_visibleStarsAmount++
     @_stars
@@ -115,13 +106,11 @@ class Galaxy
     posX = Math.round Math.random() * (Document.getVisibleWidth() - width)
     posY = 0
     star = new Rectangle star_id, posX, posY, width, height, '#ffffff', =>
-      console.log "Star destroy event fired!", star_id
       @_removeStar star_id
       @_visibleStarsAmount--
     star.setMotion()
     star
   _removeStar: (starIndex) ->
-    console.log "removing", @_stars[starIndex]
     delete @_stars[starIndex]
   _updateStars: ->
     for star in @_stars
@@ -133,7 +122,6 @@ class CanvasHolder
 
   class Canvas
     constructor: ->
-      console.log "Canvas constructor fired!"
       @_element = document.createElement 'canvas'
       @_element.setAttribute 'id', 'space'
       document.body.appendChild @_element
@@ -143,9 +131,9 @@ class CanvasHolder
         galaxy: new Galaxy
     getContext: -> @_ctx
     update: ->
+      @clear()
       element.update() for name, element of @_elements
     _setFullscreen: ->
-      console.log "Setting fullscreen", Document.getVisibleWidth(), Document.getVisibleHeight()
       @_element.setAttribute 'width', Document.getVisibleWidth()
       @_element.setAttribute 'height', Document.getVisibleHeight()
     clear: -> @_ctx.clearRect 0, 0, Document.getVisibleWidth(), Document.getVisibleHeight()
