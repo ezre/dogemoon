@@ -44,21 +44,46 @@ canvas
   nav
     width: 100%
     ul
-      padding-left: 0
       margin: 0
+      padding: 0
       li
-        width: 48px
-        height: 48px
+        listsize = 48px
+        b = 2px
+        width: listsize
+        height: listsize
+        margin: 0
+        padding: 0
         color: #fff
         text-align: center
-        line-height: 48px
+        line-height: listsize
         list-style: none
         cursor: pointer
         display: inline-block
+        position: relative
+        vertical-align: middle
+        .icon
+          circlesize = listsize * 0.666
+          color: colorlight = #fff
+          display: inline-block
+          border: b solid colorlight
+          border-radius: 50%
+          width: circlesize
+          height: circlesize
+          position: absolute
+          top: 50%
+          left: 50%
+          margin-left: -(@width / 2 + b)
+          margin-top: -(@height / 2 + b)
+          .fa
+            vertical-align: top
+            font-size: circlesize * 0.625
+            line-height: circlesize
         &.active
-          color: #000
           background: #fff
           cursor: default
+          .icon
+            color: colordark = #333
+            border: b solid colordark
   .content
     width: 100%
     height: 567px
