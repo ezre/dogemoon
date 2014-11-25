@@ -169,7 +169,7 @@ class CanvasHolder
 #     console.log 'error', e
 #     # TODO: reconnect
 
-class Main
+class Game
   @FPS = 25
   @canvas = null
   @initialize: ->
@@ -178,9 +178,9 @@ class Main
     setInterval @mainLoop, 1000 / @FPS
     ui = new UI
   @mainLoop: ->
-    Main.update()
+    Game.update()
 
   @update: ->
     @canvas.update()
 
-Main.initialize()
+Game.initialize()
