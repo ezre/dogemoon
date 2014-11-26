@@ -55,6 +55,7 @@ canvas
   position: fixed
   top: 48px
   left: 0
+  lightcolor = #fff
   nav
     width: 100%
     ul
@@ -67,7 +68,7 @@ canvas
         height: listsize
         margin: 0
         padding: 0
-        color: #fff
+        color: lightcolor
         text-align: center
         line-height: listsize
         list-style: none
@@ -77,9 +78,9 @@ canvas
         vertical-align: middle
         .icon
           circlesize = listsize * 0.666
-          color: colorlight = #fff
+          color: lightcolor
           display: inline-block
-          border: b solid colorlight
+          border: b solid lightcolor
           border-radius: 50%
           width: circlesize
           height: circlesize
@@ -93,15 +94,15 @@ canvas
             font-size: circlesize * 0.625
             line-height: circlesize
         &.active
-          background: #fff
+          background: lightcolor
           cursor: default
           .icon
-            color: colordark = #333
-            border: b solid colordark
+            color: darkcolor = #2c2c2c
+            border: b solid darkcolor
   .content
     width: 100%
     height: 567px
-    background: #fff
+    background: lightcolor
     .padded-content
       padding: 20px 27px
       word-break: break-all
