@@ -20,6 +20,8 @@ gulp.task 'templates', ->
     .pipe jade()
     .pipe gulp.dest './public/'
 
+gulp.task 'heroku:production', ['coffee', 'one', 'templates']
+
 gulp.task 'default', ->
   gulp.watch './src/js/*.coffee', ['coffee']
   gulp.watch './src/css/main.styl', ['one']
