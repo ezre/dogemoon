@@ -40,7 +40,7 @@ class Shape
   constructor: (@_posX, @_posY, @_color = 'transparent', @_destroy) ->
     @_posX ?= Math.random() * Document.getVisibleWidth()
     @_posY ?= Math.random() * Document.getVisibleHeight()
-  setMotion: (angle = 90, @_speed = 1) ->
+  setMotion: (angle = 90, @_speed = 0.05) ->
     @_angle = angle * (Math.PI / 180)
   getMotion: -> {angle: @_angle, speed: @_speed}
   update: ->
@@ -67,7 +67,7 @@ class Rectangle extends Shape
     ctx
   _move: ->
     @_posX += @_speed * Math.cos @_angle
-    @_posY += Math.pow(@_width, 2) + @_speed * Math.sin @_angle
+    @_posY += Math.pow(@_width, 2) * @_speed * Math.sin @_angle
     @_reset() unless @_checkIfOnCanvas()
   _reset: ->
     @_posY = 0
@@ -118,16 +118,16 @@ class Galaxy
     @_starIndex = 0
     @_stars = []
     @_boostController = new BoostController()
+    @_addNewStars()
   addSpeedBoost: (value, time) -> @_boostController.addSpeedBoost value, time
   setStars: (@_starsAmount) ->
   getStars: -> @_starsAmount
   update: ->
-    @_addNewStars()
     @_updateStars()
     @_boostController.timeTick()
-  _addNewStars: (newStars = 1) =>
+  _addNewStars: =>
     if @_visibleStarsAmount < @_starsAmount
-      for i in [0...newStars]
+      for i in [0..@_starsAmount]
         @_stars[@_starIndex] = @_createStar @_starIndex
         @_starIndex++
         @_visibleStarsAmount++
@@ -136,7 +136,7 @@ class Galaxy
     width = Math.round (Math.random() * 3) + 1
     height = width
     posX = Math.round Math.random() * (Document.getVisibleWidth() - width)
-    posY = 0
+    posY = Math.round Math.random() * (Document.getVisibleHeight() - height)
     star = new Rectangle posX, posY, width, height, '#ffffff', =>
       @_removeStar star_id
       @_visibleStarsAmount--
