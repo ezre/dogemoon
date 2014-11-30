@@ -1,5 +1,7 @@
 gradient-color-outer = #050022
 gradient-color-inner = #080035
+vivid-yellow = #f4db09
+vivid-cyan = #098ef4
 
 html, body
   margin: 0
@@ -34,7 +36,7 @@ h1
   font-weight: 300
   color: #fff
   span
-    color: #f4db09
+    color: vivid-yellow
   &#main-title
     position: fixed
     width: 100%
@@ -117,7 +119,41 @@ canvas
         position: relative
         &:after
           content: 'BTC'
-
+#progressbar.ui
+  pgbarwidth = 6px
+  position: fixed
+  top: 92px
+  right: 56px
+  height: 567px
+  width: pgbarwidth
+  .background
+    height: 100%
+    width: 100%
+    background #fff
+    opacity: 0.16
+  .progress
+    position: absolute
+    bottom: 0
+    right: 0
+    height: 0
+    width: 100%
+    background: #fff
+    .futureprogress
+      background: vivid-cyan
+      position: absolute
+      top: 0
+      right: 0
+      height: 0
+      width: 100%
+    .textprogress
+      position absolute
+      right: pgbarwidth + 7px
+      top: -3px
+      color: #fff
+      font-size: 12px
+      font-weight: 600
+      width: 40px
+      text-align: right
 label
   font-size: 12px
   font-weight: 600
