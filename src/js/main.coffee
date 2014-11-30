@@ -90,7 +90,7 @@ class Rocket extends Sprite
       xMax: @_posX + 5
       yMin: @_posY - 30
       yMax: @_posY + 30
-    @_speed = 0.3
+    @_speed = 0.1
     @_angle = Math.random() * 360
     @_image.onload = =>
       @_draw()
