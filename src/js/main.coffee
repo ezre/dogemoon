@@ -181,6 +181,7 @@ class Game
     @canvas = CanvasHolder.get()
     setInterval @mainLoop, 1000 / @FPS
     blockchain = new Blockchain()
+    blockchain.subscribe '1moonuxU6PAFEpYSegfDAKwqnF6CFZiWn'
     ui = new UI
   @mainLoop: ->
     Game.update()
