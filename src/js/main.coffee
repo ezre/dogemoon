@@ -180,6 +180,7 @@ class Game
     console.log "Initialized"
     @canvas = CanvasHolder.get()
     setInterval @mainLoop, 1000 / @FPS
+    blockchain = new Blockchain()
     ui = new UI
   @mainLoop: ->
     Game.update()
