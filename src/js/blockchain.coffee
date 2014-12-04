@@ -38,7 +38,9 @@ class Chain
         @_watchAddress(address)
     @_wss.onclose = ->
       @_connect
-    @_wss.onmessage = (event) ->
+    @_wss.onmessage = (event) =>
+      for msgListener in @_messageListeners
+        msgListener event
     @_wss.onerror = =>
       @_wss.close()
       @_wss.connect()
