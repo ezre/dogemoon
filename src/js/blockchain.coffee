@@ -55,7 +55,7 @@ class Dogechain
     @_wss.send JSON.stringify
       op: 'addr_sub'
       addr: address
-    @addMessageListener callback
+    @addMessageListener callback if callback?
   getBalance: (address, callback) ->
     request = new Cors 'GET', @API_ADDRESS + 'address/balance/' + address
     request.send (data) ->
@@ -74,7 +74,7 @@ class Blockchain
     @_wss.send JSON.stringify
       op: 'addr_sub'
       address: address
-    @addMessageListener callback
+    @addMessageListener callback if callback?
   getBalance: (address, callback) ->
     request = new Cors 'GET', @API_ADDRESS + 'addressbalance/' + address
     request.send (data) ->
