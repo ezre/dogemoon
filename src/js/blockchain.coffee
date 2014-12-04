@@ -21,14 +21,14 @@ class Cors
     @xhr.send()
 
 
-class Blockchain
-  WEBSOCKET_ADDRESS: 'wss://echo.websocket.org'
-  API_ADDRESS: 'https://blockchain.info/q/'
-
-  constructor: (@_notify) ->
-    @_addresses = []
-    @_isOpened = false
-    @_connect()
+class Chain
+  WEBSOCKET_ADDRESS: ''
+  API_ADDRESS: ''
+  constructor: () ->
+      @_addresses = []
+      @_isOpened = false
+      @_connect()
+      @_messageListeners = []
   _connect: ->
     @_wss = new WebSocket @WEBSOCKET_ADDRESS
     @_wss.onopen = =>
@@ -38,18 +38,41 @@ class Blockchain
         @_watchAddress(address)
     @_wss.onclose = ->
       @_connect
-    @_wss.onmessage = ->
-      @_notify
+    @_wss.onmessage = (event) ->
     @_wss.onerror = =>
       @_wss.close()
       @_wss.connect()
-  subscribe: (address) ->
+  subscribe: (address, callback) ->
+  addMessageListener: (callback) -> @_messageListeners.push callback
+
+class Dogechain
+  WEBSOCKET_ADDRESS: 'wss://ws.dogechain.info/inv'
+  API_ADDRESS: 'https://dogechain.info/api/v1/'
+  subscribe: (address, callback) ->
     @_addresses.push address
-    @_watchAddress address if @_isOpened
-  _watchAddress: (address) ->
+    @_wss.send JSON.stringify
+      op: 'addr_sub'
+      addr: address
+    @addMessageListener callback
+  getBalance: (address, callback) ->
+    request = new Cors 'GET', @API_ADDRESS + 'address/balance/' + address
+    request.send (data) ->
+      callback data
+  getReceived: (address, callback) ->
+    request = new Cors 'GET', @API_ADDRESS + 'address/received/' + address
+    request.send (data) ->
+      callback data
+
+
+class Blockchain
+  WEBSOCKET_ADDRESS: 'wss://echo.websocket.org'
+  API_ADDRESS: 'https://blockchain.info/q/'
+  subscribe: (address, callback) ->
+    @_addresses.push address
     @_wss.send JSON.stringify
       op: 'addr_sub'
       address: address
+    @addMessageListener callback
   getBalance: (address, callback) ->
     request = new Cors 'GET', @API_ADDRESS + 'addressbalance/' + address
     request.send (data) ->
