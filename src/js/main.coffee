@@ -176,13 +176,22 @@ class CanvasHolder
 class Game
   @FPS = 25
   @canvas = null
+  @progress = 0
+  @amount = 0
+  @btcAddress = '1moonuxU6PAFEpYSegfDAKwqnF6CFZiWn'
   @initialize: ->
     console.log "Initialized"
     @canvas = CanvasHolder.get()
     setInterval @mainLoop, 1000 / @FPS
-    blockchain = new Blockchain()
-    blockchain.subscribe '1moonuxU6PAFEpYSegfDAKwqnF6CFZiWn'
     ui = new UI
+    blockchain = new Blockchain()
+    blockchain.subscribe @btcAddress
+    blockchain.getBalance @btcAddress, (data) ->
+      console.log "Balance", data
+    blockchain.getReceived @btcAddress, (data) ->
+      console.log "Received", data
+      console.log "UI", ui
+      ui.getProgressBar().addDistance data
   @mainLoop: ->
     Game.update()
 
