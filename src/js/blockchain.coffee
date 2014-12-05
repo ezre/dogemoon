@@ -27,17 +27,17 @@ class Chain
   constructor: () ->
       @_addresses = []
       @_isOpened = false
-      @_connect()
       @_messageListeners = []
-  _connect: ->
+  connect: (callback) ->
     @_wss = new WebSocket @WEBSOCKET_ADDRESS
     @_wss.onopen = =>
       console.log "Opened connection to websocketq"
       @_isOpened = true
       for address in @_addresses
         @_watchAddress(address)
+      callback()
     @_wss.onclose = ->
-      @_connect
+      @connect
     @_wss.onmessage = (event) =>
       for msgListener in @_messageListeners
         msgListener event
@@ -47,7 +47,7 @@ class Chain
   subscribe: (address, callback) ->
   addMessageListener: (callback) -> @_messageListeners.push callback
 
-class Dogechain
+class Dogechain extends Chain
   WEBSOCKET_ADDRESS: 'wss://ws.dogechain.info/inv'
   API_ADDRESS: 'https://dogechain.info/api/v1/'
   subscribe: (address, callback) ->
@@ -66,7 +66,7 @@ class Dogechain
       callback data
 
 
-class Blockchain
+class Blockchain extends Chain
   WEBSOCKET_ADDRESS: 'wss://echo.websocket.org'
   API_ADDRESS: 'https://blockchain.info/q/'
   subscribe: (address, callback) ->

@@ -185,13 +185,14 @@ class Game
     setInterval @mainLoop, 1000 / @FPS
     ui = new UI
     blockchain = new Blockchain()
-    blockchain.subscribe @btcAddress
-    blockchain.getBalance @btcAddress, (data) ->
-      console.log "Balance", data
-    blockchain.getReceived @btcAddress, (data) ->
-      console.log "Received", data
-      console.log "UI", ui
-      ui.getProgressBar().addDistance data
+    blockchain.connect =>
+      blockchain.subscribe @btcAddress
+      blockchain.getBalance @btcAddress, (data) ->
+        console.log "Balance", data
+      blockchain.getReceived @btcAddress, (data) ->
+        console.log "Received", data
+        console.log "UI", ui
+        ui.getProgressBar().addDistance data
   @mainLoop: ->
     Game.update()
 
