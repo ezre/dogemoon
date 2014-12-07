@@ -21,7 +21,7 @@ class Cors
     @xhr.send()
 
 
-class Chain
+class CryptoChain
   WEBSOCKET_ADDRESS: ''
   API_ADDRESS: ''
   constructor: () ->
@@ -47,7 +47,7 @@ class Chain
   subscribe: (address, callback) ->
   addMessageListener: (callback) -> @_messageListeners.push callback
 
-class Dogechain extends Chain
+class Dogechain extends CryptoChain
   WEBSOCKET_ADDRESS: 'wss://ws.dogechain.info/inv'
   API_ADDRESS: 'https://dogechain.info/api/v1/'
   subscribe: (address, callback) ->
@@ -66,7 +66,7 @@ class Dogechain extends Chain
       callback data
 
 
-class Blockchain extends Chain
+class Blockchain extends CryptoChain
   WEBSOCKET_ADDRESS: 'wss://echo.websocket.org'
   API_ADDRESS: 'https://blockchain.info/q/'
   subscribe: (address, callback) ->
