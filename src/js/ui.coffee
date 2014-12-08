@@ -18,10 +18,8 @@ class AmountInput
     @_input.onkeyup = =>
       @_onChange parseFloat(@_input.value), @_numberFormat(100000000 * parseFloat @_input.value)
     @_input.onkeyup()
-  _numberFormat: (n, c, d, t) ->
+  _numberFormat: (n, c, d='.', t=' ') ->
     c = if isNaN(c = Math.abs(c)) then 0 else c
-    d ?= "."
-    t ?= " "
     s = if n < 0 then "-" else ""
     i = parseInt(n = Math.abs(+n || 0).toFixed c) + ""
     j = if (j = i.length) > 3 then j % 3 else 0
