@@ -104,10 +104,13 @@ canvas
           .icon
             color: darkcolor = #2c2c2c
             border: b solid darkcolor
-  .content
+  .tab-content
+    display: none
     width: 100%
     height: 567px
     background: lightcolor
+    &.active
+      display: block
     .padded-content
       padding: 20px 27px
       word-break: break-all
@@ -119,6 +122,9 @@ canvas
         position: relative
         &:after
           content: 'BTC'
+  .fa.fa-doge
+    &:after
+      content: "D"
 #progressbar.ui
   pgbarwidth = 6px
   position: fixed

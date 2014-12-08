@@ -12,19 +12,34 @@ html(lang="en")
     #sidebar.ui
       nav
         ul
-          li.active
+          li.active(data-tab='tab-btc')
             .icon
               i.fa.fa-btc
-          li
+          li(data-tab='tab-doge')
+            .icon
+              i.fa.fa-doge
+          li(data-tab='tab-calendar')
             .icon
               i.fa.fa-calendar-o
-          li
+          li(data-tab='tab-faq')
             .icon
               i.fa.fa-question
-      .content
+      .tab-content.tab-btc.active
         .padded-content
           h2='How to play?'
           p='Sent bits to boost Doge flight speed and sent him TO THE MOOOON!'
+          hr
+          label='Calculate'
+          input#calc(type='text')
+          p
+            span#meters
+            span=' meters up'
+          #qrcode
+          p='1moonuxU6PAFEpYSegfDAKwqnF6CFZiWn'
+      .tab-content.tab-doge
+        .padded-content
+          h2='How to play?'
+          p='Sent dogecoins to boost Doge flight speed and sent him TO THE MOOOON!'
           hr
           label='Calculate'
           input#calc(type='text')
